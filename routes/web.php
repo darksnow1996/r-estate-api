@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Features;
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+->middleware([
+    'guest'
+]);
+
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+->name('logout');
